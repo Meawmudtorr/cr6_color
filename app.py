@@ -7,6 +7,7 @@ import os
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 model = joblib.load('cr6_model.pkl')
 
 def allowed_file(filename):
