@@ -22,7 +22,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 100%;
+            width: 90%;
             max-width: 600px;
         }
         h1 {
@@ -40,6 +40,20 @@
             margin-bottom: 10px;
             color: #555;
         }
+        .form-group input[type="file"] {
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #fff;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
         .file-upload-button {
             display: inline-block;
             padding: 10px 20px;
@@ -55,35 +69,10 @@
             background-color: #007bff;
             color: white;
         }
-        .form-group input[type="file"] {
-            font-size: 16px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #fff;
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
         .file-name {
             margin-top: 10px;
             color: #555;
             font-size: 14px;
-        }
-        .preview-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .preview-img {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 5px;
-            display: none;
         }
         .submit-btn {
             padding: 10px 20px;
@@ -98,6 +87,11 @@
         .submit-btn:hover {
             background-color: #0056b3;
         }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
@@ -106,35 +100,26 @@
         <form action="/upload" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="file">Choose image to upload:</label>
-                <input type="file" id="file" name="file" accept="image/png, image/jpeg" onchange="updateFile()">
+                <input type="file" id="file" name="file" accept="image/png, image/jpeg" onchange="updateFileName()">
                 <label class="file-upload-button" for="file">Choose File</label>
                 <div class="file-name" id="file-name">No file chosen</div>
             </div>
-            <div class="preview-container">
-                <img id="preview" src="" alt="Image preview" class="preview-img">
-            </div>
             <input type="submit" class="submit-btn" value="Upload Image">
         </form>
+        {% if concentration %}
+            <div class="result">Predicted Cr6+ concentration: {{ concentration }} mg/L</div>
+        {% endif %}
     </div>
 
     <script>
-        function updateFile() {
+        function updateFileName() {
             const fileInput = document.getElementById('file');
             const fileNameLabel = document.getElementById('file-name');
-            const preview = document.getElementById('preview');
             const file = fileInput.files[0];
             if (file) {
                 fileNameLabel.textContent = file.name;
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
             } else {
                 fileNameLabel.textContent = 'No file chosen';
-                preview.style.display = 'none';
             }
         }
     </script>
