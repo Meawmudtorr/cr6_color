@@ -17,8 +17,8 @@ def allowed_file(filename):
 def extract_rgb(image):
     rgb_mean = np.array(image).mean(axis=(0, 1))
     if len(rgb_mean) == 3:
-        # ถ้าโมเดลคาดหวัง 4 ฟีเจอร์ เช่น RGB และ Bias หรืออื่น ๆ
-        # คุณอาจต้องเพิ่มฟีเจอร์เพิ่มเติม เช่น Bias = 1
+
+        
         rgb_mean = np.append(rgb_mean, 1)
     return rgb_mean
 
